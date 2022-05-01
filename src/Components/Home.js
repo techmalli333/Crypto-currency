@@ -10,31 +10,32 @@ export default function Home() {
   };
   React.useEffect(() => {
     axios
-      .get("https://api.coinstats.app/public/v1/coins/?skip=0&limit=10")
+      .get("https://api.coinstats.app/public/v1/coins/")
       .then((res) => setData(res.data.coins));
   });
 
   return (
     <>
-      <div className="header p-3">
-        <input
-          onChange={handler}
-          value={search}
-          className=" mt-2"
-          type="search"
-          placeholder="Search for crypto"
-        ></input>
-      </div>
-      {data.length > 0 && (
-        <div className="container">
-          <div class="row">
-            <div className="p-1 container d-flex flex-column">
+      <div className="fluid-container">
+        <div class="row m-2 d-flex justify-content-center ">
+          <div className="col-sm-8 col-md-5 col-lg-3 col-xg-2  p-3 ">
+            <input
+              onChange={handler}
+              value={search}
+              className="form-control mt-2 "
+              type="search"
+              placeholder="Search for crypto"
+            ></input>
+          </div>
+          {data.length > 0 && (
+            <div class="row m-2">
               {data
                 .filter((crypto) =>
                   crypto.name.toLowerCase().includes(search.toLowerCase())
                 )
                 .map((crypto) => (
                   <Card
+                    all={{ crypto }}
                     name={crypto.name}
                     rank={crypto.rank}
                     price={crypto.price}
@@ -43,9 +44,9 @@ export default function Home() {
                   />
                 ))}
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </>
   );
 }
